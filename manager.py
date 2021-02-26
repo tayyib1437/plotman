@@ -90,8 +90,11 @@ def maybe_start_new_plot(dir_cfg, sched_cfg, plotting_cfg):
             tmpdir = max(rankable, key=operator.itemgetter(1))[0]
 
             # Select the dst dir least recently selected
-            dir2ph = dstdirs_to_youngest_phase(jobs)
-            unused_dirs = [d for d in dir_cfg['dst'] if d not in dir2ph.keys()]
+            dir2ph = { k:v for k,v in dstdirs_to_youngest_phase(jobs).items()
+                if plot_util.df_b(k) > (len(job.job_phases_for_dstdir(k, jobs)) + 1) * plot_util.get_k32_plotsize() + 10 * plot_util.GB }
+
+            unused_dirs = [ d for d in dir_cfg['dst']
+                if d not in dir2ph.keys() and plot_util.df_b(d) > (len(job.job_phases_for_dstdir(d, jobs)) + 1) * plot_util.get_k32_plotsize() + 10 * plot_util.GB ]
             dstdir = ''
             if unused_dirs: 
                 dstdir = random.choice(unused_dirs)
