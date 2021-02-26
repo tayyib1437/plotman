@@ -55,7 +55,16 @@ scheduling:
         tmpdir_stagger_phase_minor: 1
 
         # Don't run more than this many jobs at a time on a single temp dir.
-        tmpdir_max_jobs: 3
+
+        tmpdir:
+                "/mnt/temp0":
+                        max_jobs: 4
+                "/mnt/temp1":
+                        max_jobs: 4
+                "/mnt/temp2":
+                        max_jobs: 3
+                "/mnt/temp3":
+                        max_jobs: 0
 
         # Don't run any jobs (across all temp dirs) more often than this.
         global_stagger_m: 30

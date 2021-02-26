@@ -131,7 +131,7 @@ def tmp_dir_report(jobs, tmpdirs, sched_cfg, width, start_row=None, end_row=None
         if (start_row and i < start_row) or (end_row and i >= end_row):
             continue
         phases = sorted(job.job_phases_for_tmpdir(d, jobs))
-        ready = manager.phases_permit_new_job(phases, sched_cfg)
+        ready = manager.phases_permit_new_job(phases, sched_cfg, d)
         row = [abbr_path(d, prefix), 'OK' if ready else '--', phases_str(phases)]
         tab.add_row(row)
 
